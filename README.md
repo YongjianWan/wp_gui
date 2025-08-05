@@ -1,9 +1,7 @@
 # wp_gui
 
-平稳运行并设置 wp\_gui.py 的开机自启**。我们采用 **最稳妥又图形化的方法**：
+平稳运行并设置 wp\_gui.py 的开机自启**
 用 `Automator` 创建一个启动器，然后设置为登录启动项。
-
-
 
 打开「终端 Terminal」，输入以下命令安装依赖包：
 
@@ -13,14 +11,13 @@ pip3 install pillow pystray
 
 ---
 
-1. 打开你喜欢的编辑器（推荐 VSCode 或 TextEdit）
+1. 打开VSCode
 2. 将你的 Python 脚本保存为 `wp_gui.py`
 3. 放在一个固定的位置，比如 `~/Documents/WPGUI/`（我们后面都以这个目录为例）
 
 ---
 
-
-我们要创建一个用于后台运行的 mac 脚本。
+创建一个用于后台运行的 mac 脚本。
 
 ### 3.1 打开终端，输入以下命令：
 
@@ -33,8 +30,6 @@ open wp_gui.command
 
 终端会自动打开文本编辑器，接下来：
 
-### 3.2 把下面这段内容粘贴进去：
-
 ```bash
 #!/bin/bash
 cd "$(dirname "$0")"
@@ -42,7 +37,6 @@ python3 wp_gui.py &
 ```
 
 然后保存并关闭编辑器。
-
 
 在终端中输入：
 
@@ -54,7 +48,6 @@ chmod +x wp_gui.command
 创建一个 mac 启动器（用 Automator）
 
 我们要让这个脚本可以随 mac 开机自动运行。
-
 
 * 用 Spotlight 搜索「Automator」打开
 
@@ -82,7 +75,6 @@ cd ~/Documents/WPGUI
 * 文件 → 存储
 * 命名为：`WPGUI_启动器.app`
 * 存到你愿意放的地方（建议：`~/Applications/` 或 `~/Documents/WPGUI/`）
-
 
 1. 打开「系统设置」→「用户与群组」→「登录项」
 2. 找到“在登录时打开的项目”
