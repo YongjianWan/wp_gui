@@ -2,19 +2,19 @@
 
 ## Windows：
 1. 安装Python依赖：
-bash
-'''
+
+```bash
 pip install pillow pystray
-'''
+```
 3. 保存代码为 'wp_gui.py'
 4. 创建启动脚本 'wp_gui.bat'：
-batch
-'''
+
+```batch
 @echo off
 cd /d "%~dp0"
 start /min pythonw wp_gui.py
 exit
-'''
+```
 6. 设置开机自启（可选）：
 
 把 'wp_gui.bat' 放到启动文件夹
