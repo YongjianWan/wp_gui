@@ -1,10 +1,9 @@
 # wp_gui
 
-好的，亲爱的 Aiden，我们就一步一步来，确保你在 **macOS 上能平稳运行并设置 wp\_gui.py 的开机自启**。我们采用 **最稳妥又图形化的方法**：用 `Automator` 创建一个启动器，然后设置为登录启动项。
+平稳运行并设置 wp\_gui.py 的开机自启**。我们采用 **最稳妥又图形化的方法**：
+用 `Automator` 创建一个启动器，然后设置为登录启动项。
 
----
 
-## ✅ 第一步：安装依赖
 
 打开「终端 Terminal」，输入以下命令安装依赖包：
 
@@ -14,15 +13,12 @@ pip3 install pillow pystray
 
 ---
 
-## ✅ 第二步：保存脚本文件
-
 1. 打开你喜欢的编辑器（推荐 VSCode 或 TextEdit）
 2. 将你的 Python 脚本保存为 `wp_gui.py`
 3. 放在一个固定的位置，比如 `~/Documents/WPGUI/`（我们后面都以这个目录为例）
 
 ---
 
-## ✅ 第三步：创建 `.command` 启动脚本
 
 我们要创建一个用于后台运行的 mac 脚本。
 
@@ -47,23 +43,18 @@ python3 wp_gui.py &
 
 然后保存并关闭编辑器。
 
-### 3.3 给它执行权限：
 
 在终端中输入：
 
 ```bash
 chmod +x wp_gui.command
 ```
+双击 `wp_gui.command` 文件来启动你的 Python 脚本**了！
 
-✅ 你现在可以**双击 `wp_gui.command` 文件来启动你的 Python 脚本**了！
-
----
-
-## ✅ 第四步：创建一个 mac 启动器（用 Automator）
+创建一个 mac 启动器（用 Automator）
 
 我们要让这个脚本可以随 mac 开机自动运行。
 
-### 4.1 打开「Automator」应用
 
 * 用 Spotlight 搜索「Automator」打开
 
@@ -93,23 +84,13 @@ cd ~/Documents/WPGUI
 * 存到你愿意放的地方（建议：`~/Applications/` 或 `~/Documents/WPGUI/`）
 
 
-## ✅ 第五步：设置开机启动
-
 1. 打开「系统设置」→「用户与群组」→「登录项」
 2. 找到“在登录时打开的项目”
 3. 点击 `+` 按钮
 4. 添加刚刚保存的 `WPGUI_启动器.app`
-
-## ✅ 第六步：测试是否成功
-
 你可以重启电脑或者注销一次，然后观察：
-
 * 系统顶部菜单栏是否出现你的图标（取决于 `pystray` 设置）
 * 后台是否正常运行了你的 `wp_gui.py`
 
-
-💡 **补充建议**：如果运行时发现图标不出现或报错，请确认：
-
-* `wp_gui.py` 中使用的是 macOS 支持的图标格式（建议 PNG）
 * `pystray` 的实现方式为 macOS 适配（建议用 `PIL.Image.open()` 而非 Windows 系统路径方法）
 
