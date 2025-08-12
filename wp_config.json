@@ -1,7 +1,18 @@
 {
   "week_num": 1,
-  "last_check": "2025-08-06",
+  "last_check": "2025-08-12",
   "theme": "superhero",
+  "font_size": 9,
+  "auto_save": true,
+  "auto_startup": false,
+  "reminder_enabled": true,
+  "reminder_intervals": [
+    9,
+    14,
+    18,
+    21
+  ],
+  "last_reminder": "2025-08-12_18",
   "reminders_enabled": true,
   "reminder_times": [
     "09:00",
@@ -9,5 +20,10 @@
     "18:00",
     "21:00"
   ],
-  "auto_backup": true
+  "auto_backup": true,
+  "accent_color": "#0d6efd",
+  "dark_mode": false,
+  "auto_save_interval": 300,
+  "current_week": 1,
+  "start_date": "2025-08-12"
 }

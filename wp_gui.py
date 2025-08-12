@@ -17,7 +17,6 @@ import schedule
 import time
 from collections import defaultdict
 
-
 # 解决高DPI模糊问题
 try:
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -25,12 +24,6 @@ except:
     pass
 
 class WeeklyProgressTracker:
-        # 1. 在应用内切到“今日记录”页
-    def open_today(self):
-        self.show_window()                      # 确保主窗体可见
-        self.notebook.select(self.today_frame)  # 切换到“📝 今日记录”标签
-        self.text_area.focus_set()              # 光标定位到编辑器
-
     def __init__(self):
         # 文件路径配置
         self.config_file = "wp_config.json"
@@ -140,6 +133,8 @@ class WeeklyProgressTracker:
         style = ttk.Style()
         style.configure('Title.TLabel', font=('Microsoft YaHei', 16, 'bold'))
         style.configure('Card.TFrame', relief="flat", borderwidth=1)
+
+
         
         # 顶部标题栏
         header_frame = ttk.Frame(self.root, style='primary.TFrame')
@@ -170,6 +165,8 @@ class WeeklyProgressTracker:
         # 右侧主区域
         right_panel = ttk.Frame(main_container)
         right_panel.pack(side=LEFT, fill=BOTH, expand=True)
+        # 创建状态栏
+        self.create_status_bar()
         
         # 标签页
         self.notebook = ttk.Notebook(right_panel, bootstyle="primary")
@@ -190,8 +187,6 @@ class WeeklyProgressTracker:
         self.notebook.add(self.reminder_frame, text="⏰ 提醒设置")
         self.setup_reminder_tab()
         
-        # 底部状态栏
-        self.create_status_bar()
         
     def create_quick_actions(self, parent):
         """创建快捷操作面板"""
@@ -202,7 +197,7 @@ class WeeklyProgressTracker:
         actions = [
             ("✨ 快速记录", self.quick_add_dialog, "primary"),
             ("✅ 标记完成", self.mark_done_dialog, "success"),
-            ("📋 打开编辑器", self.open_today, "info"),
+            ("📋 打开编辑器", self.open_editor, "info"),
             ("⏱️ 开始计时", self.show_timer, "warning"),
             ("📊 生成报告", self.generate_report, "secondary")
         ]
@@ -590,6 +585,21 @@ class WeeklyProgressTracker:
         self.clock_label.config(text=current_time)
         self.root.after(1000, self.update_clock)
         
+    def open_editor(self):
+        """打开文本编辑器编辑今日记录"""
+        self.add_today_entry()  # 确保今日记录存在
+        
+        # 使用系统默认编辑器打开文件
+        if sys.platform == "win32":
+            os.startfile(self.current_file)
+        elif sys.platform == "darwin":  # macOS
+            subprocess.call(["open", self.current_file])
+        else:  # linux
+            subprocess.call(["xdg-open", self.current_file])
+            
+        self.update_status("已打开编辑器")
+        self.show_notification("编辑器已打开", "请在编辑器中修改内容")
+        
     def refresh_content(self):
         """刷新内容"""
         if os.path.exists(self.current_file):
@@ -738,12 +748,11 @@ class WeeklyProgressTracker:
                         # 检查是否有待办事项
                         pending = self.get_pending_count()
                         if pending > 0:
-                            self.show_notification(
+                            self.root.after(0, lambda: self.show_notification(
                                 "任务提醒",
                                 f"你还有 {pending} 个待办事项需要完成"
-                            )
-                            
-                    # 检查截止日期提醒
+                            ))
+                    # 检查截止日期提醒  
                     self.check_due_dates_reminder()
                     
                 time.sleep(60)  # 每分钟检查一次
@@ -979,11 +988,19 @@ class WeeklyProgressTracker:
         self.timer_window.configure(bg='#1a1a1a')
         
         # 计时器显示
-        self.timer_label = ttk.Label(
-            self.timer_window,
-            text="00:00:00",
-            font=('Digital-7', 48),  # 需要安装数字字体
-            bootstyle="success"
+        try:
+            self.timer_label = ttk.Label(
+                self.timer_window,
+                text="00:00:00",
+                font=('Digital-7', 48),
+                bootstyle="success"
+            )
+        except:
+            self.timer_label = ttk.Label(
+                self.timer_window,
+                text="00:00:00",
+                font=('Consolas', 36),  # 备用字体
+                bootstyle="success"
         )
         self.timer_label.pack(pady=40)
         
@@ -1128,7 +1145,8 @@ class WeeklyProgressTracker:
         
     def update_status(self, message):
         """更新状态栏"""
-        self.status_label.config(text=message)
+        if hasattr(self, 'status_label'):
+            self.status_label.config(text=message)
         
     def show_window(self):
         """显示主窗口"""
@@ -1256,7 +1274,13 @@ class WeeklyProgressTracker:
         """显示总结"""
         self.show_window()
         self.notebook.select(self.week_frame)
-        self.update_week_overview(self.week_frame.winfo_children()[0].winfo_children()[0])
+        #添加安全检查
+        children = self.week_frame.winfo_children()
+        if children and hasattr(children[0], 'winfo_children'):
+            sub_children = children[0].winfo_children()
+            if sub_children:
+                self.update_week_overview(sub_children[0])
+        
 
 if __name__ == "__main__":
     # 设置DPI感知
