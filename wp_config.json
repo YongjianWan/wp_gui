@@ -1,10 +1,10 @@
 {
-  "week_num": 1,
-  "last_check": "2025-08-14",
+  "week_num": 9,
+  "last_check": "2025-09-24",
   "theme": "superhero",
-  "font_size": 9,
+  "font_size": 13,
   "auto_save": true,
-  "auto_startup": false,
+  "auto_startup": true,
   "reminder_enabled": true,
   "reminder_intervals": [
     9,
@@ -12,7 +12,7 @@
     18,
     21
   ],
-  "last_reminder": "2025-08-12_18",
+  "last_reminder": "2025-09-26_14",
   "reminders_enabled": true,
   "reminder_times": [
     "09:00",

@@ -222,7 +222,7 @@ class WeeklyTracker:
             paned.pack(fill=tk.BOTH, expand=True)
             
             # 左侧：今日记录
-            left_frame = ttk.LabelFrame(paned, text="📝 今日记录", padding=10)
+            left_frame = ttk.LabelFrame(paned, text=" 今日记录", padding=10)
             paned.add(left_frame, weight=3)
             
             # 文本编辑区域
@@ -249,9 +249,9 @@ class WeeklyTracker:
             editor_toolbar.pack(fill=tk.X, pady=(0, 5))
             
             # 左侧按钮
-            ttk.Button(editor_toolbar, text="💾 保存", command=self.save_content, width=8).pack(side=tk.LEFT, padx=2)
-            ttk.Button(editor_toolbar, text="🔄 刷新", command=self.refresh_content, width=8).pack(side=tk.LEFT, padx=2)
-            ttk.Button(editor_toolbar, text="📋 模板", command=self.insert_template, width=8).pack(side=tk.LEFT, padx=2)
+            ttk.Button(editor_toolbar, text=" 保存", command=self.save_content, width=8).pack(side=tk.LEFT, padx=2)
+            ttk.Button(editor_toolbar, text=" 刷新", command=self.refresh_content, width=8).pack(side=tk.LEFT, padx=2)
+            ttk.Button(editor_toolbar, text=" 模板", command=self.insert_template, width=8).pack(side=tk.LEFT, padx=2)
             
             # 右侧状态
             status_frame = ttk.Frame(editor_toolbar)
@@ -291,18 +291,18 @@ class WeeklyTracker:
         """创建右键菜单"""
         try:
             self.context_menu = tk.Menu(self.root, tearoff=0)
-            self.context_menu.add_command(label="✅ 标记完成", command=self.mark_line_done)
-            self.context_menu.add_command(label="⏰ 插入时间", command=self.insert_timestamp)
+            self.context_menu.add_command(label=" 标记完成", command=self.mark_line_done)
+            self.context_menu.add_command(label=" 插入时间", command=self.insert_timestamp)
             self.context_menu.add_separator()
-            self.context_menu.add_command(label="📋 复制", command=self.copy_text)
-            self.context_menu.add_command(label="📄 粘贴", command=self.paste_text)
+            self.context_menu.add_command(label=" 复制", command=self.copy_text)
+            self.context_menu.add_command(label=" 粘贴", command=self.paste_text)
         except Exception as e:
             print(f"创建右键菜单错误: {e}")
             
     def create_task_panel(self, parent):
         """创建任务面板"""
         try:
-            task_frame = ttk.LabelFrame(parent, text="✅ 待办任务", padding=10)
+            task_frame = ttk.LabelFrame(parent, text=" 待办任务", padding=10)
             task_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
             
             # 任务列表
@@ -318,8 +318,8 @@ class WeeklyTracker:
             task_buttons = ttk.Frame(task_frame)
             task_buttons.pack(fill=tk.X)
             
-            ttk.Button(task_buttons, text="➕ 添加", command=self.add_task).pack(side=tk.LEFT, padx=2, fill=tk.X, expand=True)
-            ttk.Button(task_buttons, text="✅ 完成", command=self.complete_task).pack(side=tk.LEFT, padx=2, fill=tk.X, expand=True)
+            ttk.Button(task_buttons, text=" 添加", command=self.add_task).pack(side=tk.LEFT, padx=2, fill=tk.X, expand=True)
+            ttk.Button(task_buttons, text=" 完成", command=self.complete_task).pack(side=tk.LEFT, padx=2, fill=tk.X, expand=True)
             
             # 初始化任务列表
             self.refresh_tasks()
@@ -334,10 +334,10 @@ class WeeklyTracker:
             actions_frame.pack(fill=tk.X)
             
             actions = [
-                ("📝 时间戳", self.insert_timestamp),
-                ("📊 新周开始", self.new_week),
-                ("📤 导出记录", self.export_records),
-                ("🔧 打开文件夹", self.open_folder)
+                ("时间戳", self.insert_timestamp),
+                ("新周开始", self.new_week),
+                ("导出记录", self.export_records),
+                ("打开文件夹", self.open_folder)
             ]
             
             for text, command in actions:
